@@ -31,21 +31,22 @@ inquirer.prompt([
         inquirer.prompt([
             {
                 name: "question",
+                type: "input",
                 message: "What song would you like to search?"
             }
         ]).then(function(songResponse){
             if(songResponse != ""){
                 spotify.get("search", {q: songResponse})
-                        console.log("------------------");
-                        // Parse the artist's name
-                        console.log("The movie's title is : " + JSON.stringify(body).Title);
-                        // Parse the song name
-                        console.log("The movie came out in: " + JSON.parse(body).Year);
-                        // Parse the spotify preview link
-                        console.log("The movie's IMDB rating is: " + JSON.parse(body).imdbRating);
-                        // Pasre the album name
-                        console.log("The movie's Rotten Tomatoes raiting is: " + JSON.parse(body).tomatoRating);
-                        console.log("------------------");
+                    console.log("------------------");
+                    // Parse the artist's name
+                    console.log("The Artist's name is : " + JSON.stringify(body).Title);
+                    // Parse the song name
+                    console.log("The song title is: " + JSON.parse(body).Year);
+                    // Parse the spotify preview link
+                    console.log("Here is a preview link: " + JSON.parse(body).imdbRating);
+                    // Pasre the album name
+                    console.log("This is the album name for the song: " + JSON.parse(body).tomatoRating);
+                    console.log("------------------");
             }
             else{
                 spotify.get("search", {q: "I Want It That Way"})
@@ -68,17 +69,18 @@ inquirer.prompt([
         inquirer.prompt([
             {
                 name: "question",
+                type: "input",
                 message: "What movie would you like to search?"
             }
         ]).then(function(movieResponse){
             if(movieResponse != ""){
-                request("http://www.omdbapi.com/?t=" + movieResponse + "&apikey=trilogy", function(error, response, body) {
+                request("http://www.omdbapi.com/?t=" + movieResponse.question + "&apikey=trilogy", function(error, response, body) {
 
                     // If the request is successful
                     if (!error && response.statusCode === 200) {
                         console.log("------------------");
                         // Parse the movie title
-                        console.log("The movie's title is : " + JSON.stringify(body).Title);
+                        console.log("The movie's title is : " + JSON.parse(body).Title);
                         // Parse the year the movie came out
                         console.log("The movie came out in: " + JSON.parse(body).Year);
                         // Parse the imdb rating
@@ -86,13 +88,13 @@ inquirer.prompt([
                         // Pasre the rotten tomatoes rating
                         console.log("The movie's Rotten Tomatoes raiting is: " + JSON.parse(body).tomatoRating);
                         // Parse the country the movie was produced
-                        console.log("The movie was produced in: " +JSON.stringify(body).Country);
+                        console.log("The movie was produced in: " +JSON.parse(body).Country);
                         // Parse the language of the movie
-                        console.log("The movie is spokin in: " + JSON.stringify(body).Language);
+                        console.log("The movie is spokin in: " + JSON.parse(body).Language);
                         // Parse the movie plot
-                        console.log("The plot of the movie is: " + JSON.stringify(body).Plot);
+                        console.log("The plot of the movie is: " + JSON.parse(body).Plot);
                         // Parse the actors
-                        console.log("The cast of the movie is: " + JSON.stringify(body).Actors);
+                        console.log("The cast of the movie is: " + JSON.parse(body).Actors);
                         console.log("------------------");
                     }
                     else {
