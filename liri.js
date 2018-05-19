@@ -86,7 +86,7 @@ inquirer.prompt([
                         // Parse the imdb rating
                         console.log("The movie's IMDB rating is: " + JSON.parse(body).imdbRating);
                         // Pasre the rotten tomatoes rating
-                        console.log("The movie's Rotten Tomatoes raiting is: " + JSON.parse(body).tomatoRating);
+                        console.log("The movie's Rotten Tomatoes rating is: " + JSON.parse(body).tomatoRating);
                         // Parse the country the movie was produced
                         console.log("The movie was produced in: " +JSON.parse(body).Country);
                         // Parse the language of the movie
@@ -115,7 +115,7 @@ inquirer.prompt([
                         // Parse the imdb rating
                         console.log("The movie's IMDB rating is: " + JSON.parse(body).imdbRating);
                         // Pasre the rotten tomatoes rating
-                        console.log("The movie's Rotten Tomatoes raiting is: " + JSON.parse(body).tomatoRating);
+                        console.log("The movie's Rotten Tomatoes rating is: " + JSON.parse(body).tomatoRating);
                         // Parse the country the movie was produced
                         console.log("The movie was produced in: " +JSON.stringify(body).Country);
                         // Parse the language of the movie
