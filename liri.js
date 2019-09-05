@@ -1,8 +1,9 @@
-var Spotify = function(sKey){};
+// variable for dotenv
+var env = require("dotenv").config({path: "./apikeys.env"});
+
+var Spotify = require("node-spotify-api");
 var Twitter = function(tKey){};
 
-// variable for dotenv
-var env = require("dotenv").config();
 // variable for API keys
 var keys = require("./keys.js");
 // variable for request npm for OMDB
@@ -23,8 +24,11 @@ inquirer.prompt([
     }
 ]).then(function(mainAnswer){
     if(mainAnswer.select_file === "my-tweets"){
-        client.get('search/tweets', {q: 'node.js'}, function(error, tweets, response) {
-            console.log(response);
+        request.get("https://api.twitter.com/1.1/search/tweets.json?q=from%3Ahalups", function(error, response, body) {
+            stringResponse = JSON.stringify(response);
+            console.log("Error: " + error);
+            console.log("Status Code: " + stringResponse);
+            console.log("Data: " + body);
         });
     }
     else if (mainAnswer.select_file === "spotify-this-song"){
@@ -35,32 +39,41 @@ inquirer.prompt([
                 message: "What song would you like to search?"
             }
         ]).then(function(songResponse){
-            if(songResponse != ""){
-                spotify.get("search", {q: songResponse})
+            if(songResponse.question != ""){
+                spotify.search({type: "track", query: "name:"+songResponse.question, limit: 1}).then(function(response){
+                    // console.log(response)
+                    // console.log(response.tracks)
+                    console.log(response.tracks.items[0]);
                     console.log("------------------");
                     // Parse the artist's name
-                    console.log("The Artist's name is : " + JSON.stringify(body).Title);
+                    console.log("The Artist's name is : " + response.tracks.items[0].artists[0].name);
                     // Parse the song name
-                    console.log("The song title is: " + JSON.parse(body).Year);
+                    console.log("The song title is: " + response.tracks.items[0].name);
                     // Parse the spotify preview link
-                    console.log("Here is a preview link: " + JSON.parse(body).imdbRating);
+                    console.log("Here is a preview link: " + response.tracks.items[0].preview_url);
                     // Pasre the album name
-                    console.log("This is the album name for the song: " + JSON.parse(body).tomatoRating);
+                    console.log("This is the album name is: " + response.tracks.items[0].album.name);
                     console.log("------------------");
+                }).catch(function(err){
+                    console.log(err);
+                });
             }
             else{
-                spotify.get("search", {q: "I Want It That Way"})
-
-                        console.log("------------------");
-                        // Parse the artist's name
-                        console.log("The Artist's name is : " + JSON.stringify(body).Title);
-                        // Parse the song name
-                        console.log("The song title is: " + JSON.parse(body).Year);
-                        // Parse the spotify preview link
-                        console.log("Here is a preview link: " + JSON.parse(body).imdbRating);
-                        // Pasre the album name
-                        console.log("This is the album name for the song: " + JSON.parse(body).tomatoRating);
-                        console.log("------------------");
+                spotify.search({type: "track", query: "name:The Sign", limit: 1}).then(function(response){
+                    // console.log(response)
+                    console.log(response.tracks.href)
+                    // console.log(response.tracks.items[0]);
+                    console.log("------------------");
+                    // Parse the artist's name
+                    console.log("The Artist's name is : " + response.tracks.items[0].artists[0].name);
+                    // Parse the song name
+                    console.log("The song title is: " + response.tracks.items[0].name);
+                    // Parse the spotify preview link
+                    console.log("Here is a preview link: " + response.tracks.items[0].preview_url);
+                    // Pasre the album name
+                    console.log("This is the album name is: " + response.tracks.items[0].album.name);
+                    console.log("------------------");
+                });
             };
 
         });
